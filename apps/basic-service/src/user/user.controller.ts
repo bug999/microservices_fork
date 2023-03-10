@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, Request } from '@nestjs/common';
-import { UserService } from '../service/user.service';
+import { UserService } from './user.service';
 import { GrpcMethod } from '@nestjs/microservices';
-import { Basic_Service, RegisterRequest } from '../pd/user.pd';
+import { Basic_Service, RegisterRequest } from './user.pd';
 
 @Controller('user')
 export class UserController {

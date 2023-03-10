@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import * as Sequelize from 'sequelize'; // 引入 Sequelize 库
-import sequelize from '../../../../common/database/sequelize'; // 引入 Sequelize 实例
-import { makeSalt, encryptPassword } from '../../utils/cryptogram'; // 引入加密函数
-import { User } from '../entity/user.entity';
-import { RegisterRequest } from '../pd/user.pd';
+import sequelize from '../../../common/database/sequelize'; // 引入 Sequelize 实例
+import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密函数
+import { User } from './user.entity';
+import { RegisterRequest } from './user.pd';
 
 @Injectable()
 export class UserService {

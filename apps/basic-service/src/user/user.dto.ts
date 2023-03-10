@@ -1,5 +1,5 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
-import { LoginRequest, RegisterRequest } from '../pd/user.pd';
+import { LoginRequest, RegisterRequest } from './user.pd';
 
 export class LoginRequestDto implements LoginRequest {
   @IsEmail()

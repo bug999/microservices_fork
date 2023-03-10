@@ -4,7 +4,7 @@ import { Transport } from '@nestjs/microservices';
 import * as express from 'express';
 import { join } from 'path';
 import { AppModule } from './app.module';
-import { Basic_Service } from './user/pd/user.pd';
+import { Basic_Service } from './user/user.pd';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {

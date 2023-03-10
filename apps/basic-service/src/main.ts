@@ -16,7 +16,7 @@ async function bootstrap() {
       protoPath: join('config/proto/basic.proto'),
     },
   });
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  // app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   await app.listen();
   // await NestFactory.create(AppModule);
   // app.use(express.json()); // For parsing application/json

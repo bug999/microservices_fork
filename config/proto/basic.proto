@@ -10,7 +10,9 @@ service BasicService {
 message RegisterRequest {
   string email = 1;
   string password = 2;
-  string moblie = 3;
+  string mobile = 3;
+  string userName = 4;
+  string repassword = 5;
 }
 
 message RegisterResponse {

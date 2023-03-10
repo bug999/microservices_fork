@@ -1,3 +1,4 @@
+import { ResponseData } from "apps/common/dto/common.dto";
 
 export interface LoginRequest {
   email: string;
@@ -7,8 +8,14 @@ export interface LoginRequest {
 export interface RegisterRequest {
   email?: string;
   password: string;
-  moblie: string;
+  mobile: string;
+  userName?: string;
+  repassword?: string;
   [key: string]: string;
+}
+
+export interface RegisterResponse extends ResponseData {
+  data: any
 }
 
 export const Basic_Service = 'BasicService'

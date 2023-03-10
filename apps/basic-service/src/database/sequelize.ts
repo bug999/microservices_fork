@@ -1,6 +1,6 @@
 
 import { Sequelize } from 'sequelize-typescript';
-import db from '../../../config/db';
+import db from '../../../../config/db';
 
 const sequelize = new Sequelize(db.mysql.database, db.mysql.user, db.mysql.password || null, {
   // 自定义主机; 默认值: localhost

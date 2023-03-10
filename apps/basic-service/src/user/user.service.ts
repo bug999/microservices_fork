@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import * as Sequelize from 'sequelize'; // 引入 Sequelize 库
-import sequelize from '../../../common/database/sequelize'; // 引入 Sequelize 实例
+import dataSource from 'apps/basic-service/src/database/connection';
+import sequelize from '../database/sequelize'; // 引入 Sequelize 实例
 import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密函数
-import { User } from './user.entity';
+import { RegisterRequestDto } from './user.dto';
+import { User } from '../entity/user';
 import { RegisterRequest } from './user.pd';
 
+const userRepository = dataSource.getRepository(User);
 @Injectable()
 export class UserService {
   login(): string {
@@ -15,33 +17,18 @@ export class UserService {
   * @param username 用户名
   */
   async findOne(email?: string, mobile?: string): Promise<any | undefined> {
-    const sql = `
-      SELECT
-        *
-      FROM
-        user
-      WHERE
-      email = '${email || ""}' or mobile ='${mobile || ''}';
-    `; // 一段平淡无奇的 SQL 查询语句
-    try {
-      const user = (await sequelize.query(sql, {
-        type: Sequelize.QueryTypes.SELECT, // 查询方式
-        raw: true, // 是否使用数组组装的方式展示结果
-        // logging: true, // 是否将 SQL 语句打印到控制台
-      }))[0];
-      // 若查不到用户，则 user === undefined
-      return user;
-    } catch (error) {
-      console.error(error);
-      return void 0;
-    }
+    return await userRepository.findOne({
+      where: {
+        mobile: mobile,
+      }
+    })
   }
 
   /**
  * 注册
  * @param requestBody 请求体
  */
-  async register(requestBody: RegisterRequest): Promise<any> {
+  async register(requestBody: RegisterRequestDto): Promise<any> {
     const { userName, password, repassword, mobile, email } = requestBody;
     console.log(password, repassword, mobile)
     if (password !== repassword) {
@@ -51,6 +38,7 @@ export class UserService {
       };
     }
     const user = await this.findOne(email, mobile);
+    console.log(111, mobile, user)
     if (user) {
       return {
         code: 400,
@@ -59,14 +47,21 @@ export class UserService {
     }
     const salt = makeSalt(); // 制作密码盐
     const hashPwd = encryptPassword(password, salt);  // 加密密码
-    const registerSQL = `
-        INSERT INTO user
-          (user_name, password, mobile, status, email, salt)
-        VALUES
-          ('${userName || ''}', '${hashPwd}', '${mobile}', 1, '${email || ''}','${salt}')
-      `;
+    userRepository.createQueryBuilder().insert().into(User).values({
+      mobile,
+      email: email,
+      password: hashPwd,
+      userName,
+      salt
+    }).execute()
+    // const registerSQL = `
+    //     INSERT INTO user
+    //       (user_name, password, mobile, status, email, salt)
+    //     VALUES
+    //       ('${userName || ''}', '${hashPwd}', '${mobile}', 1, '${email || ''}','${salt}')
+    //   `;
     try {
-      await sequelize.query(registerSQL, { logging: true });
+      //   await sequelize.query(registerSQL, { logging: true });
       return {
         code: 200,
         msg: 'success',

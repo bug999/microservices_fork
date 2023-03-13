@@ -1,0 +1,12 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "database": "nest",
+  "username": "root",
+  "password": "admin1234",
+  "entities": [
+    "dist /**/*.entity.{ts,js}"
+  ],
+  "synchronize": true
+}

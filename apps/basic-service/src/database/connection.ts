@@ -2,7 +2,7 @@
 import db from "config/db";
 import { join } from "path";
 import { DataSource } from "typeorm";
-import { User } from "../entity/user";
+import { User } from "../entity/user.entity";
 
 const dataSource = new DataSource({
   type: 'mysql',

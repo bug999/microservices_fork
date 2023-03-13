@@ -1,7 +1,8 @@
 import { Body, Controller, Inject, OnModuleInit, Post, Put } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { RegisterRequestDto } from 'apps/basic-service/src/user/user.dto';
+import { LoginRequestDto, RegisterRequestDto } from 'apps/basic-service/src/user/user.dto';
 import { RegisterResponse } from 'apps/basic-service/src/user/user.pd';
+import { JsonData, ResponseData } from 'apps/common/utils/jsonData';
 import { Observable } from 'rxjs';
 import { BasicServiceClient, BASIC_SERVICE_NAME } from './basic.pb';
 
@@ -17,11 +18,14 @@ export class BasicController implements OnModuleInit {
   }
 
   @Post('register')
-  private async register(@Body() body: RegisterRequestDto): Promise<Observable<RegisterResponse>> {
-    console.log('11')
-    const { userName, password, repassword, mobile, email } = body;
+  private async register(@Body() body: RegisterRequestDto): Promise<ResponseData> {
+    const res = await this.svc.register(body).toPromise();
+    return JsonData.parse(res);
+  }
 
-    console.log(password, repassword, mobile)
-    return this.svc.register(body);
+  @Post('login')
+  private async login(@Body() body: LoginRequestDto): Promise<ResponseData> {
+    const res = await this.svc.login(body).toPromise();
+    return JsonData.parse(res);
   }
 }

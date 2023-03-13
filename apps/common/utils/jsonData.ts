@@ -17,21 +17,38 @@ export class JsonData {
    */
   private msg: string;
 
-  public static getData(data: any = null, code = 200, msg = ''): ResponseData {
-    return { code, msg, data };
-  }
-
   /**
-   * 成功，不传入数据
+   * @param msg 返回消息
+   * @param data 返回对象
+   * @param code 状态码
    * @return
    */
-  public static buildSuccess(msg = ''): ResponseData {
-    return JsonData.getData(null, 200, msg);
+  public static getData(data: any = null, code = 200, msg = ''): ResponseData {
+    return { code, msg, data: JSON.stringify(data) };
   }
 
   /**
-   * 失败，传入描述信息
-   * @param msg
+ * @description JSON数据转对象
+ * @return
+ */
+  public static parse(data: any = null): ResponseData {
+    return { ...data, data: JSON.parse(data.data || 'null') };
+  }
+
+  /**
+   * @param msg 返回消息
+   * @param data 返回对象
+   * @param code 状态码
+   * @return
+   */
+  public static buildSuccess(msg = '', data: any = null): ResponseData {
+    return JsonData.getData(data, 200, msg);
+  }
+
+  /**
+   * @param msg 返回消息
+   * @param data 返回对象
+   * @param code 状态码
    * @return
    */
   public static buildError(msg: string): ResponseData {

@@ -25,8 +25,13 @@ export class RegisterRequestDto implements RegisterRequest {
 }
 
 export class LoginRequestDto implements LoginRequest {
-  @IsEmail()
-  public readonly email: string;
+  [key: string]: string;
+
+  @IsString()
+  code?: string;
+
+  @IsString()
+  public readonly mobile: string;
 
   @IsString()
   @MinLength(8)

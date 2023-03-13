@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
-import { RegisterRequestDto } from 'apps/basic-service/src/user/user.dto';
+import { LoginRequestDto, RegisterRequestDto } from 'apps/basic-service/src/user/user.dto';
 import { RegisterResponse } from 'apps/basic-service/src/user/user.pd';
 import { Observable } from 'rxjs';
 
@@ -11,11 +11,12 @@ export const BASIC_PACKAGE_NAME = 'basic';
 
 export interface BasicServiceClient {
   register(request: RegisterRequestDto): Observable<RegisterResponse>;
-
+  login(request: LoginRequestDto): Observable<RegisterResponse>;
 }
 
 export interface BasicServiceController {
   register(request: RegisterRequestDto): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
+  login(request: LoginRequestDto): Observable<RegisterResponse>;
 }
 
 export function BasicServiceControllerMethods() {

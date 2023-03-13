@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import dataSource from 'apps/basic-service/src/database/connection';
-import sequelize from '../database/sequelize'; // 引入 Sequelize 实例
 import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密函数
-import { RegisterRequestDto } from './user.dto';
-import { User } from '../entity/user';
-import { RegisterRequest } from './user.pd';
+import { LoginRequestDto, RegisterRequestDto } from './user.dto';
+import { User } from '../entity/user.entity';
+import { JsonData } from 'apps/common/utils/jsonData';
 
 const userRepository = dataSource.getRepository(User);
 @Injectable()
 export class UserService {
-  login(): string {
-    return 'Hello World!';
-  }
   /**
   * 查询是否有该用户
   * @param username 用户名
@@ -25,9 +21,33 @@ export class UserService {
   }
 
   /**
- * 注册
- * @param requestBody 请求体
- */
+   * 登陆
+   * @param requestBody 请求体
+   */
+  async login(requestBody: LoginRequestDto): Promise<any> {
+    const { code, mobile } = requestBody;
+    try {
+      const user = await userRepository.findOne({
+        where: {
+          mobile: mobile
+        }
+      })
+      if (!user)
+        return JsonData.buildError('用户不存在');
+      const hashPwd = encryptPassword(requestBody.password, user.salt);  // 加密密码
+      if (hashPwd === user.password) {
+        const { password, salt, ...userData } = user
+        return JsonData.buildSuccess('', userData)
+      }
+    } catch (error) {
+      return JsonData.buildError(error)
+    }
+    return JsonData.buildError('');
+  }
+  /**
+   * 注册
+   * @param requestBody 请求体
+   */
   async register(requestBody: RegisterRequestDto): Promise<any> {
     const { userName, password, repassword, mobile, email } = requestBody;
     console.log(password, repassword, mobile)
@@ -40,10 +60,7 @@ export class UserService {
     const user = await this.findOne(email, mobile);
     console.log(111, mobile, user)
     if (user) {
-      return {
-        code: 400,
-        msg: '用户已存在',
-      };
+      return JsonData.buildError('用户已存在');
     }
     const salt = makeSalt(); // 制作密码盐
     const hashPwd = encryptPassword(password, salt);  // 加密密码
@@ -54,23 +71,11 @@ export class UserService {
       userName,
       salt
     }).execute()
-    // const registerSQL = `
-    //     INSERT INTO user
-    //       (user_name, password, mobile, status, email, salt)
-    //     VALUES
-    //       ('${userName || ''}', '${hashPwd}', '${mobile}', 1, '${email || ''}','${salt}')
-    //   `;
     try {
       //   await sequelize.query(registerSQL, { logging: true });
-      return {
-        code: 200,
-        msg: 'success',
-      };
+      return JsonData.buildSuccess();
     } catch (error) {
-      return {
-        code: 503,
-        msg: `Service error: ${error}`,
-      };
+      return JsonData.buildError(error)
     }
   }
 }

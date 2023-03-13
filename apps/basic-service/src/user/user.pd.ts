@@ -1,8 +1,10 @@
 import { ResponseData } from "apps/common/dto/common.dto";
 
 export interface LoginRequest {
-  email: string;
+  mobile: string;
   password: string;
+  code?: string;
+  [key: string]: string;
 }
 
 export interface RegisterRequest {

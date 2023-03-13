@@ -4,6 +4,7 @@ import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密
 import { LoginRequestDto, RegisterRequestDto } from './user.dto';
 import { User } from '../entity/user.entity';
 import { JsonData } from 'apps/common/utils/jsonData';
+import { AuthService } from '../auth/auth.service';
 
 const userRepository = dataSource.getRepository(User);
 @Injectable()
@@ -26,23 +27,19 @@ export class UserService {
    */
   async login(requestBody: LoginRequestDto): Promise<any> {
     const { code, mobile } = requestBody;
-    try {
-      const user = await userRepository.findOne({
-        where: {
-          mobile: mobile
-        }
-      })
-      if (!user)
-        return JsonData.buildError('用户不存在');
+    const user = await userRepository.findOne({
+      where: {
+        mobile: mobile
+      }
+    })
+    if (user) {
       const hashPwd = encryptPassword(requestBody.password, user.salt);  // 加密密码
       if (hashPwd === user.password) {
         const { password, salt, ...userData } = user
-        return JsonData.buildSuccess('', userData)
+        return userData
       }
-    } catch (error) {
-      return JsonData.buildError(error)
     }
-    return JsonData.buildError('');
+    return null;
   }
   /**
    * 注册
@@ -57,10 +54,14 @@ export class UserService {
         msg: '两次密码输入不一致',
       };
     }
+
     const user = await this.findOne(email, mobile);
     console.log(111, mobile, user)
     if (user) {
-      return JsonData.buildError('用户已存在');
+      return {
+        code: 400,
+        msg: '用户已存在',
+      };
     }
     const salt = makeSalt(); // 制作密码盐
     const hashPwd = encryptPassword(password, salt);  // 加密密码
@@ -71,11 +72,9 @@ export class UserService {
       userName,
       salt
     }).execute()
-    try {
-      //   await sequelize.query(registerSQL, { logging: true });
-      return JsonData.buildSuccess();
-    } catch (error) {
-      return JsonData.buildError(error)
-    }
+    return {
+      code: 200,
+      msg: '注册成功',
+    };
   }
 }

@@ -1,6 +1,6 @@
 // src/logical/auth/auth.module.ts
 import { Module } from '@nestjs/common';
-import { AuthService } from './service/auth';
+import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { UserModule } from '../user/user.module';
@@ -15,7 +15,6 @@ import { jwtConstants } from '../constants';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '8h' }, // token 过期时效
     }),
-    UserModule,
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],

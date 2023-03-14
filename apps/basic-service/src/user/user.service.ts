@@ -3,9 +3,6 @@ import dataSource from 'apps/basic-service/src/database/connection';
 import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密函数
 import { LoginRequestDto, RegisterRequestDto } from './user.dto';
 import { User } from '../entity/user.entity';
-import { JsonData } from 'apps/common/utils/jsonData';
-import { AuthService } from '../auth/auth.service';
-
 const userRepository = dataSource.getRepository(User);
 @Injectable()
 export class UserService {
@@ -21,6 +18,18 @@ export class UserService {
     })
   }
 
+  /**
+   * 获取用户信息
+   * @param requestBody 请求体
+   */
+  async getUserInfo(id: number): Promise<any> {
+    const user = await userRepository.findOne({
+      where: {
+        id
+      }
+    })
+    return user;
+  }
   /**
    * 登陆
    * @param requestBody 请求体

@@ -1,5 +1,5 @@
-export interface ResponseData {
-  code: number;
-  data: any;
-  msg: string | number
+import { IsString } from "class-validator";
+export class UserInfoDto {
+  @IsString()
+  user: string
 }

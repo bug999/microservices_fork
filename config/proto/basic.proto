@@ -5,6 +5,11 @@ package basic;
 service BasicService {
   rpc Register (RegisterRequest) returns (ResponseData) {}
   rpc Login (LoginRequest) returns (ResponseData) {}
+  rpc getUserInfo (UserInfo) returns (ResponseData) {}
+}
+
+message UserInfo {
+   string user = 1;
 }
 
 // Register

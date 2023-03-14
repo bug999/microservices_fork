@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { AuthModule } from '../auth/auth.module';
 import { BasicController } from './basic.controller';
 import { BASIC_SERVICE_NAME, BASIC_PACKAGE_NAME } from './basic.pb';
 import { BasicService } from './basic.service';
@@ -19,6 +20,7 @@ import { BasicService } from './basic.service';
         },
       },
     ]),
+    AuthModule
   ],
   controllers: [BasicController],
   providers: [BasicService],

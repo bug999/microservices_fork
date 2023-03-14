@@ -1,4 +1,5 @@
-import { ResponseData } from "apps/common/dto/common.dto";
+import { ResponseData } from "apps/common/utils/jsonData";
+
 
 export interface LoginRequest {
   mobile: string;

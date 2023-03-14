@@ -2,8 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JsonData } from 'apps/common/utils/jsonData';
-import { UserService } from '../user/user.service';
-import { encryptPassword } from '../utils/cryptogram';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +13,7 @@ export class AuthService {
     try {
       const token = this.jwtService.sign(payload);
       console.log(token)
-      return JsonData.buildSuccess('', {
+      return JsonData.buildSuccess({
         token,
         ...user
       });

@@ -41,7 +41,7 @@ export class JsonData {
    * @param code 状态码
    * @return
    */
-  public static buildSuccess(msg = '', data: any = null): ResponseData {
+  public static buildSuccess(data: any = null, msg = '',): ResponseData {
     return JsonData.getData(data, 200, msg);
   }
 
@@ -51,7 +51,7 @@ export class JsonData {
    * @param code 状态码
    * @return
    */
-  public static buildError(msg: string): ResponseData {
-    return JsonData.getData(null, 400, msg);
+  public static buildError(msg: string, code = 400): ResponseData {
+    return JsonData.getData(null, code, msg);
   }
 }

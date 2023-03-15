@@ -11,7 +11,7 @@ async function bootstrap() {
     transport: Transport.GRPC,
     name: Basic_Service,
     options: {
-      url: '0.0.0.0:30000',
+      url: '0.0.0.0:30002',
       package: 'basic',
       protoPath: join('config/proto/basic.proto'),
     },

@@ -40,8 +40,8 @@ export class BasicController implements OnModuleInit {
   @UseGuards(AuthGuard('jwt'))
   @Get('user/info')
   async getUserInfo(@Request() req: UserInfoDto): Promise<ResponseData> {
-    const data = await this.svc.getUserInfo(req)
-    console.log(data)
-    return data
+    const data: ResponseData = await this.svc.getUserInfo({ user: JSON.stringify(req.user) }).toPromise();
+    console.log(55, data)
+    return JsonData.parse(data)
   }
 }

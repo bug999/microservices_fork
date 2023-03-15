@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "concurrently --kill-others \"nest start basic-service --watch\" \"nest start gateway-service --watch\"",
+    "start": "concurrently --kill-others \"nest start basic-service --watch\" \"nest start mock-service --watch\" \"nest start gateway-service --watch\"",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start:dev": "nest start --watch",

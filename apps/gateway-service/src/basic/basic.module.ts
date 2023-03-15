@@ -14,7 +14,7 @@ import { BasicService } from './basic.service';
         name: BASIC_SERVICE_NAME,
         transport: Transport.GRPC,
         options: {
-          url: '0.0.0.0:30000',
+          url: '0.0.0.0:30002',
           package: BASIC_PACKAGE_NAME,
           protoPath: join('config/proto/basic.proto'),
         },

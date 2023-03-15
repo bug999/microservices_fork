@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Request, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Basic_Service, RegisterRequest } from './user.pd';
@@ -46,6 +46,12 @@ export class UserController {
   async getUserInfo(@Body() body: UserInfoDto) {
     console.log('req2', body)
     const user = JSON.parse(body.user)
-    return await this.userService.getUserInfo(user.userId)
+    try {
+      const res = await this.userService.getUserInfo(user.userId)
+      if (res) return JsonData.getData(res)
+      return JsonData.buildError(res.msg);
+    } catch (error) {
+      return JsonData.buildError(error)
+    }
   }
 }

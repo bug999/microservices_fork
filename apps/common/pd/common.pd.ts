@@ -1,5 +1,4 @@
-// export interface ResponseData {
-//   code: number;
-//   data: any;
-//   msg: string | number
-// }
+export interface UserDataType {
+  userId: number;
+  userName: any;
+}

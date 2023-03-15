@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import dataSource from 'apps/basic-service/src/database/connection';
+import dataSource from '../database/connection';
 import { makeSalt, encryptPassword } from '../utils/cryptogram'; // 引入加密函数
 import { LoginRequestDto, RegisterRequestDto } from './user.dto';
 import { User } from '../entity/user.entity';
@@ -28,6 +28,7 @@ export class UserService {
         id
       }
     })
+    console.log(user)
     return user;
   }
   /**

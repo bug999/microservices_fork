@@ -2,7 +2,7 @@
 import db from "config/db";
 import { join } from "path";
 import { DataSource } from "typeorm";
-import { User } from "../entity/user.entity";
+import { MockProject } from "../entity/project.entity";
 
 const dataSource = new DataSource({
   type: 'mysql',
@@ -15,9 +15,9 @@ const dataSource = new DataSource({
   database: db.mysql.database,
   // entities: [join(__dirname + "/entity/*{.js,.ts}")],
   synchronize: true,
-  entities: [User]
+  entities: [MockProject]
 });
 dataSource.initialize().then(() => {
-  console.log('basic:数据库连接成功');
+  console.log('mock:数据库连接成功');
 }); // 执行连接
 export default dataSource;

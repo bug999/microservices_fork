@@ -14,13 +14,13 @@ export const BASIC_PACKAGE_NAME = 'basic';
 export interface BasicServiceClient {
   register(request: RegisterRequestDto): Observable<RegisterResponse>;
   login(request: LoginRequestDto): Observable<RegisterResponse>;
-  getUserInfo(request: UserInfoDto): ResponseData
+  getUserInfo(request: UserInfoDto): Observable<ResponseData>
 }
 
 export interface BasicServiceController {
   register(request: RegisterRequestDto): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
   login(request: LoginRequestDto): Observable<RegisterResponse>;
-  getUserInfo(request: UserInfoDto): ResponseData;
+  getUserInfo(request: UserInfoDto): Observable<ResponseData>
 }
 
 export function BasicServiceControllerMethods() {

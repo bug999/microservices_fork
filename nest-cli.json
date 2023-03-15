@@ -10,15 +10,6 @@
   "monorepo": true,
   "root": "apps/microservices",
   "projects": {
-    "microservices": {
-      "type": "application",
-      "root": "apps/microservices",
-      "entryFile": "main",
-      "sourceRoot": "apps/microservices/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/microservices/tsconfig.app.json"
-      }
-    },
     "basic-service": {
       "type": "application",
       "root": "apps/basic-service",
@@ -35,6 +26,15 @@
       "sourceRoot": "apps/gateway-service/src",
       "compilerOptions": {
         "tsConfigPath": "apps/gateway-service/tsconfig.app.json"
+      }
+    },
+    "mock-service": {
+      "type": "application",
+      "root": "apps/mock-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/mock-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mock-service/tsconfig.app.json"
       }
     }
   }

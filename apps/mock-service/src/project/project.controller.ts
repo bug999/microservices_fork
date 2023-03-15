@@ -3,7 +3,7 @@ import { MockProjectService } from './project.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import { CreateProject, Mock_Service } from './project.pd';
 import { JsonData } from 'apps/common/utils/jsonData';
-import { CreateProjectDto, GetProjectListDto } from './project.dto';
+import { CreateProjectDto, GetProjectListDto, UpdateProjectDto } from './project.dto';
 
 @Controller()
 export class MockProjectController {
@@ -36,6 +36,23 @@ export class MockProjectController {
     try {
       const list = await this.mockService.getListByUserId(body)
       return JsonData.buildSuccess(list)
+    } catch (error) {
+      return JsonData.buildError(error);
+    }
+  }
+
+  /**
+* @description 更新项目
+* @param body 
+* @returns 
+*/
+  @Post('project/edit')
+  @GrpcMethod(Mock_Service, 'updateProjectById')
+  async updateProjectById(@Body() body: UpdateProjectDto) {
+    console.log(111, body)
+    try {
+      await this.mockService.updateProjectById(body)
+      return JsonData.buildSuccess()
     } catch (error) {
       return JsonData.buildError(error);
     }

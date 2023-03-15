@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Pagination } from 'apps/common/utils/pageUtils';
 import dataSource from '../database/connection';
 import { MockProject } from '../entity/project.entity';
-import { GetProjectListDto } from './project.dto';
+import { GetProjectListDto, UpdateProjectDto } from './project.dto';
 import { CreateProject } from './project.pd';
 
 @Injectable()
@@ -36,5 +36,11 @@ export class MockProjectService {
       .take(query.pageSize)     // 每页的数据条数
       .getManyAndCount(); // 返回查询到的数据和总条数
     return new Pagination(query.page, query.pageSize, res[0], res[1])
+  }
+
+  async updateProjectById(query: UpdateProjectDto): Promise<any> {
+    const res = await this.repository.update(query.id, query)
+    console.log(res)
+    return res
   }
 }

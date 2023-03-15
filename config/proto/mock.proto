@@ -5,6 +5,14 @@ package mock;
 service MockService {
   rpc createProject (CreateProjectDto) returns (ResponseData) {}
   rpc getProjectListByUserId (ProjectListArgs) returns (ResponseData) {}
+  rpc updateProjectById (EditProjectArgs) returns (ResponseData) {}
+}
+
+message EditProjectArgs {
+   string name = 1;
+   string desc = 2;
+   int32 status = 3;
+   int32 id = 4;
 }
 
 message ProjectListArgs {

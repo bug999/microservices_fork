@@ -21,6 +21,6 @@ export class MockProject extends BaseEntity {
   @CreateDateColumn({ comment: '创建时间', name: "created_at" })  // 自动生成列
   createdAt: string;
 
-  @Column({ type: "bigint", nullable: true, })
+  @Column({ type: "bigint", nullable: true, default: 1 })
   public status?: number;
 }

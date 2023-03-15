@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, OnModuleInit, Post, Put, Request, UseGua
 import { ClientGrpc } from '@nestjs/microservices';
 import { AuthGuard } from '@nestjs/passport';
 import { JsonData, ResponseData } from 'apps/common/utils/jsonData';
-import { CreateProjectDto, GetProjectListDto } from 'apps/mock-service/src/project/project.dto';
+import { CreateProjectDto, GetProjectListDto, UpdateProjectDto } from 'apps/mock-service/src/project/project.dto';
 import { CreateProject } from 'apps/mock-service/src/project/project.pd';
 import { AuthService } from '../auth/auth.service';
 import { GatewayArgs } from '../common.pb';
@@ -32,6 +32,14 @@ export class MockController implements OnModuleInit {
   @Get('project/list')
   async getProjectListByUserId(@Request() req: GatewayArgs<GetProjectListDto>) {
     const data = await this.svc.getProjectListByUserId({ ...req.query, userId: req.user.userId }).toPromise()
+    return JsonData.parse(data)
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('project/edit')
+  async updateProjectById(@Request() req: GatewayArgs<UpdateProjectDto>) {
+    console.log(req.body)
+    const data = await this.svc.updateProjectById({ userId: req.user.userId, ...req.body }).toPromise()
     return JsonData.parse(data)
   }
 }

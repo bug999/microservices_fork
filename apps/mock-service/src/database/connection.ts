@@ -1,8 +1,10 @@
-
-import db from "config/db";
-import { join } from "path";
-import { DataSource } from "typeorm";
-import { MockProject } from "../entity/project.entity";
+import db from 'config/db';
+import { join } from 'path';
+import { DataSource } from 'typeorm';
+import { MockData } from '../entity/mockData.entity';
+import { MockProject } from '../entity/project.entity';
+import { MockUserAndProjetOfRelation } from '../entity/project_user.entity';
+import { MockTeams } from '../entity/teams.entity';
 
 const dataSource = new DataSource({
   type: 'mysql',
@@ -15,7 +17,7 @@ const dataSource = new DataSource({
   database: db.mysql.database,
   // entities: [join(__dirname + "/entity/*{.js,.ts}")],
   synchronize: true,
-  entities: [MockProject]
+  entities: [MockProject, MockTeams, MockUserAndProjetOfRelation, MockData],
 });
 dataSource.initialize().then(() => {
   console.log('mock:数据库连接成功');

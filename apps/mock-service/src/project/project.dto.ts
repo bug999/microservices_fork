@@ -26,11 +26,30 @@ export class CreateProjectDto implements CreateProject, PostRequestDataDto {
   status?: number;
 }
 
+export class CreateProjectTeamsDto {
+  @IsNumber()
+  userId?: number;
+  @IsString()
+  name?: string;
+  @IsString()
+  desc?: string;
+  @IsString()
+  resData?: string;
+  @IsNumber()
+  status?: number;
+}
+
 export class GetProjectListDto implements PageQueryType {
   page: number;
   pageSize: number;
   userId: number;
-  name?: string
+  name?: string;
+}
+export class GetMockDataListDto implements PageQueryType {
+  page: number;
+  pageSize: number;
+  teamsId: number;
+  name?: string;
 }
 
 export class UpdateProjectDto extends CreateProjectDto {
@@ -40,4 +59,14 @@ export class UpdateProjectDto extends CreateProjectDto {
   name?: string;
   desc?: string;
   status?: number;
+}
+
+export class CreateTeamsOfMockDataDto {
+  name?: string;
+  desc?: string;
+  status?: number;
+  teamsId?: number;
+  mark: string;
+  userId: string;
+  resData: string;
 }

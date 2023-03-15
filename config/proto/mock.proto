@@ -6,6 +6,19 @@ service MockService {
   rpc createProject (CreateProjectDto) returns (ResponseData) {}
   rpc getProjectListByUserId (ProjectListArgs) returns (ResponseData) {}
   rpc updateProjectById (EditProjectArgs) returns (ResponseData) {}
+  rpc createTeamsOfProject (CreateProjectTeamsDto) returns (ResponseData) {}
+  rpc createTeamsOfMockData (CreateTeamsOfMockDataDto) returns (ResponseData) {}
+  rpc getMockDataListByTeamsId (TeamsMockDataListArgs) returns (ResponseData) {}
+}
+
+message CreateTeamsOfMockDataDto {
+  string name = 1;
+  string desc = 2;
+  int32 status = 3;
+  int32 teamsId = 4;
+  string mark = 5;
+  int32 userId= 6;
+  string resData = 7;
 }
 
 message EditProjectArgs {
@@ -20,6 +33,21 @@ message ProjectListArgs {
   string pageSize = 2;
   int32 userId = 3;
   string name = 4;
+}
+ message TeamsMockDataListArgs{
+  string page = 1;
+  string pageSize = 2;
+  int32 teamsId = 3;
+  string name = 4;
+ }
+
+message CreateProjectTeamsDto {
+   string name = 1;
+   string desc = 2;
+   int32 status = 3;
+   int32 userId = 4;
+   int32 projectId = 5;
+   string resData = 6;
 }
 
 message CreateProjectDto {

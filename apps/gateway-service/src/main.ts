@@ -5,9 +5,8 @@ import { AllExceptionsFilter } from './utils/any-exception.filter';
 import { HttpExceptionFilter } from './utils/http-exception.filter';
 import { TransformInterceptor } from './utils/transform.interceptor';
 
-
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.setGlobalPrefix('api');
   // 监听所有的请求路由，并打印日志
   app.use(logger);
